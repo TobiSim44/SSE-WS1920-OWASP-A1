@@ -1,7 +1,17 @@
 version: '3.3'
 services:
+  app:
+    container_name: node
+    restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    links:
+      - db
+
   db:
     image: mysql:5.6
+    restart: always
     environment:
       MYSQL_DATABASE: 'my-db'
       # So you don't have to use root, but you can if you like
