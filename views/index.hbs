@@ -1,15 +1,62 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <h1>SSE Vorlesung</h1>
 
+<h2>{{title}}</h2>
 
-<form action="/" method="get">
+<b>Geheime Nachrichten speichern</b>
+<br>
+<form action="/secretMessage/save" method="get">
     <label>
-        <input name="user" type="text">
+        Geheimer Schlüssel
+        <input name="personalKey" type="number">
+    </label>
+    <br>
+    <label>
+        Titel der geheimen Nachricht
+        <input name="title" type="text">
+    </label>
+    <br>
+    <label>
+        Geheime Nachricht
+        <input name="secret" type="text">
     </label>
     <button type="submit">send</button>
 </form>
 
-
+<br>
 <hr>
+<br>
 
-Ergebnisse:
+<b>Geheime Nachrichten lesen</b>
+<br>
+<form action="/secretMessage/read" method="get">
+    <label>
+        Geheimer Schlüssel
+        <input name="key" type="number">
+    </label>
+
+    <button type="submit">Öffnen</button>
+</form>
+
+<br>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each data}}
+        <tr>
+            <td>{{this.title}}</td>
+            <td>{{this.secret}}</td>
+        </tr>
+    {{/each}}
+
+    </tbody>
+</table>
+
 
