@@ -14,17 +14,32 @@ con.connect(function (err) {
     console.log("Connected!");
 });
 
-// Tabelle löschen
-// con.query("DROP TABLE Safe;", function (err, rows, fields) {
-//     if (err) throw err;
-//     console.log('The solution is: ', rows);
-// });
+// try {
+//     //warning Tabelle löschen
+//     con.query("DROP TABLE Safe;", function (err, rows, fields) {
+//         if (err) {
+//             console.log(err);
+//             return;
+//         }
+//         console.log('The solution is: ', rows);
+//     });
+// } catch (e) {
+//
+// }
 
-// Tabelle neu erstellen
-// con.query("CREATE TABLE Safe (personalKey int NOT NULL, title varchar(100), secret varchar(100), PRIMARY KEY(personalKey));", function (err, rows, fields) {
-//     if (err) throw err;
-//     console.log('The solution is: ', rows);
-// });
+// try {
+//     // Tabelle neu erstellen
+//     con.query("CREATE TABLE Safe (personalKey int NOT NULL, title varchar(100), secret varchar(100), PRIMARY KEY(personalKey));", function (err, rows, fields) {
+//         if (err) {
+//             console.log(err);
+//             return;
+//         }
+//         console.log('The solution is: ', rows);
+//     });
+// } catch (e) {
+//
+// }
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

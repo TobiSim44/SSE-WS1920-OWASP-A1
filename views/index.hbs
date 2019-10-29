@@ -1,62 +1,63 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <h1>SSE Vorlesung</h1>
-
-<h2>{{title}}</h2>
-
-<b>Geheime Nachrichten speichern</b>
-<br>
-<form action="/secretMessage/save" method="get">
-    <label>
-        Geheimer Schlüssel
-        <input name="personalKey" type="number">
-    </label>
-    <br>
-    <label>
-        Titel der geheimen Nachricht
-        <input name="title" type="text">
-    </label>
-    <br>
-    <label>
-        Geheime Nachricht
-        <input name="secret" type="text">
-    </label>
-    <button type="submit">send</button>
-</form>
+<h3>{{title}}</h3>
 
 <br>
-<hr>
-<br>
+<div style="display: flex;flex-wrap:wrap;">
+    <div style="width: 40vw;min-width: 410px; border:black 1px solid;padding: 4px">
+        <b>Geheime Nachrichten speichern</b>
+        <br>
+        <form action="/secretMessage/save" method="get">
+            <label>
+                Geheimer Schlüssel
+                <input name="personalKey" type="number">
+            </label>
+            <br>
+            <label>
+                Titel der geheimen Nachricht
+                <input name="title" type="text">
+            </label>
+            <br>
+            <label>
+                Geheime Nachricht
+                <input name="secret" type="text">
+            </label>
+            <button type="submit">send</button>
+        </form>
+    </div>
 
-<b>Geheime Nachrichten lesen</b>
-<br>
-<form action="/secretMessage/read" method="get">
-    <label>
-        Geheimer Schlüssel
-        <input name="key" type="number">
-    </label>
+    <div style="width: 40vw; min-width: 410px; border:black 1px solid;padding: 4px">
+        <b>Geheime Nachrichten lesen</b>
+        <br>
+        <form action="/secretMessage/read" method="get">
+            <label>
+                Geheimer Schlüssel
+                <input name="key" type="number">
+            </label>
 
-    <button type="submit">Öffnen</button>
-</form>
+            <button type="submit">Öffnen</button>
+        </form>
 
-<br>
+        <br>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Message</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each data}}
-        <tr>
-            <td>{{this.title}}</td>
-            <td>{{this.secret}}</td>
-        </tr>
-    {{/each}}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Titel</th>
+                <th scope="col">Nachricht</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each data}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.secret}}</td>
+                </tr>
+            {{/each}}
 
-    </tbody>
-</table>
-
-
+            </tbody>
+        </table>
+    </div>
+</div>
