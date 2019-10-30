@@ -6,7 +6,8 @@ var con = mysql.createConnection({
     host: "192.168.99.100",
     user: "root",
     password: "password123",
-    database: "my-db"
+    database: "my-db",
+    multipleStatements: true
 });
 
 con.connect(function (err) {
@@ -31,10 +32,9 @@ try {
     // Tabelle neu erstellen
     con.query("CREATE TABLE Safe (personalKey int NOT NULL, title varchar(100), secret varchar(100), PRIMARY KEY(personalKey));", function (err, rows, fields) {
         if (err) {
-            console.log(err);
             return;
         }
-        console.log('The solution is: ', rows);
+        console.log('_________________ TABLE Safe CREATED _________________');
     });
 } catch (e) {
 
@@ -60,7 +60,7 @@ router.get('/secretMessage/save', function (req, res, next) {
     con.query("INSERT INTO Safe (personalKey, title, secret) VALUES (" + personalKey + ", '" + title + "', '" + secret + "') ", function (err, rows, fields) {
         if (err) throw err;
     });
-
+    console.log(`NEW ROW ${personalKey} | ${title} | ${secret}`);
     res.render('index', {title: 'Geheime Nachricht gespeichert'});
 });
 
