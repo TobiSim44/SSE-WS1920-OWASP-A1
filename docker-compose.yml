@@ -1,13 +1,13 @@
 version: '3.3'
 services:
-  app:
-    container_name: node
-    restart: always
-    build: .
-    ports:
-      - '3000:3000'
-    links:
-      - db
+#  app:
+#    container_name: node
+#    restart: always
+#    build: .
+#    ports:
+#      - '3000:3000'
+#    links:
+#      - db
 
   db:
     image: mysql:5.6
