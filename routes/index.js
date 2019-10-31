@@ -57,8 +57,11 @@ router.get('/secretMessage/save', function (req, res, next) {
     var title = req.query.title;
     var secret = req.query.secret;
 
-    con.query("INSERT INTO Safe (personalKey, title, secret) VALUES (" + personalKey + ", '" + title + "', '" + secret + "') ", function (err, rows, fields) {
-        if (err) throw err;
+    con.query("INSERT INTO Safe (personalKey, title, secret) VALUES (" + personalKey + ", '" + title + "', '" + secret + "');", function (err, rows, fields) {
+        if (err){
+            console.log('Something went wrong during insert');
+            console.log(err)
+        }
     });
     console.log(`NEW ROW ${personalKey} | ${title} | ${secret}`);
     res.render('index', {title: 'Geheime Nachricht gespeichert'});
@@ -73,7 +76,8 @@ router.get('/secretMessage/read', function (req, res, next) {
     //todo prevent SQL-Injections
 
     con.query("SELECT * FROM Safe WHERE personalKey=" + personalKey + ";", function (err, rows, fields) {
-        if (err) throw err;
+        if (err) console.log('Something went wrong during select');
+        console.log(`SHOW ${personalKey}`);
         res.render('index', {title: 'Geheime Nachricht gefunden', data: rows});
     });
 });
