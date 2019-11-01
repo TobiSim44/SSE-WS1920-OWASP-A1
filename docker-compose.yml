@@ -1,19 +1,26 @@
 version: '3.3'
 services:
+  os-injection:
+    container_name: sse-os-injection
+    restart: always
+    build: OS-Injection
+    ports:
+      - '3001:3000'
+
   sql-injection:
     container_name: sse-sql-injection
     restart: always
-    build: .
+    build: SQL-Injection
     ports:
       - '3000:3000'
     links:
-      - db
+      - ssedb
 
-  db:
+  ssedb:
     image: mysql:5.6
     restart: always
     environment:
-      MYSQL_DATABASE: 'my-db'
+      MYSQL_DATABASE: 'ssedb'
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'sse'
       # You can use whatever password you like
@@ -29,6 +36,7 @@ services:
       # Where our data will be persisted
     volumes:
       - my-db:/data/db
+
 # Names our volume
 volumes:
   my-db:

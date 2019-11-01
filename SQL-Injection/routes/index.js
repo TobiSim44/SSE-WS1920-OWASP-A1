@@ -6,8 +6,8 @@ var con = mysql.createConnection({
     host: "192.168.99.100",
     user: "root",
     password: "password123",
-    database: "my-db",
-    // port:80,
+    database: "ssedb",
+    port:3306,
     multipleStatements: true
 });
 

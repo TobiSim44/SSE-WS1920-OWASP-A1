@@ -1,8 +1,0 @@
-version: '3.3'
-services:
-  os-injection:
-    container_name: sse-os-injection
-    restart: always
-    build: .
-    ports:
-      - '3001:3000'
