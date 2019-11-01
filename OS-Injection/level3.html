@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>OS Injection</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+    <script>
+        function startProcessing(loaderId) {
+            const loader = document.getElementById(loaderId);
+            loader.className = 'loader';
+            loader.innerHTML = "Processing your Request. <br> Please wait."
+        }
+
+        function stopProcessing(loaderId, formTextid, formText) {
+            const loader = document.getElementById(loaderId);
+            loader.className = 'none';
+            loader.innerHTML = '';
+            document.getElementById(formTextid).innerHTML = formText;
+        }
+
+        function submitFlag() {
+            
+            startProcessing('loaderFlag');
+            const flagSub = new XMLHttpRequest();
+            const flagVal = document.getElementById('flagInput').value;
+            const request = "/flagLvl3?flag=" + encodeURIComponent(flagVal);
+            flagSub.open("GET", request, true);
+            flagSub.send();
+            flagSub.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    stopProcessing('loaderFlag', 'flagSubRes', this.responseText)
+                }
+            };
+        }
+
+        function saveDoc() {
+            startProcessing('loaderSyscall')
+            const xhttp = new XMLHttpRequest();
+            const uname = document.getElementById('username').value;
+            const fname = document.getElementById('filename').value;
+            const fcontent = document.getElementById('content').value;
+            
+            const request = "/saveFileLvl3";
+            xhttp.open("POST", request, true);
+            xhttp.setRequestHeader("content-type", "application/json");
+            const data = {"username": uname, "filename": fname, "filecontent": fcontent}
+            xhttp.send(JSON.stringify(data));
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    console.log(res);
+                    
+                    stopProcessing('loaderSyscall','systemcall', res.data);
+                    if(!res.err) {
+                        sendLogin(true);
+                        loadFile(fname);
+                    }
+                }
+            };
+        }
+
+        function updateFileList(data) {
+            const files = document.getElementById('file_list');
+            files.innerHTML = "";
+            data.forEach(elem => {
+                files.innerHTML += "<li onclick=loadFile(\"" + elem + "\")>" + elem + "</li>";
+            })
+        }
+
+        function sendLogin() {
+            
+            startProcessing('loaderSyscall')
+            const xhttp = new XMLHttpRequest();
+            const uname = document.getElementById('username').value;
+            const request = "/loginLvl3";
+            xhttp.open("POST", request, true);
+            xhttp.setRequestHeader("content-type", "application/json");
+            const data = {username: uname}
+            xhttp.send(JSON.stringify(data));
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let res = JSON.parse(this.responseText);
+                    if(res.err) return stopProcessing('loaderSyscall','systemcall', res.data);
+                    stopProcessing('loaderSyscall','systemcall', "");
+                    updateFileList(res.data);
+                    
+                }
+            };
+        }
+
+
+
+        function sendLoginIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                sendLogin();
+            }
+        }
+
+        function sendFlagIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                submitFlag();
+            }
+        }
+        function loadFile(filename) {
+            startProcessing('loaderSyscall')
+            const xhttp = new XMLHttpRequest();
+            const request = "/loadFileLvl3";
+            const uname = document.getElementById('username').value;
+            xhttp.open("POST", request, true);
+            xhttp.setRequestHeader("content-type", "application/json");
+            const data = {"username": uname, "filename": filename}   
+            xhttp.send(JSON.stringify(data));
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const resJSON = JSON.parse(this.responseText);
+                    stopProcessing('loaderSyscall','systemcall', resJSON.info);
+                    if(resJSON.info === 'Datei erfolgreich geladen!') {
+                        document.getElementById('content').value = resJSON.data.toString('utf8');
+                        document.getElementById('filename').value = resJSON.filename;
+                    }
+                }
+            };
+        }
+    </script>
+
+    <div class="container">
+        Gib zu allererst einen Benutzernamen ein, um deinen eigenen Wrokspace zu erstellen.<br>
+        Ja, der Name ist völlig egal.<br>
+        Auch diesmal liegt die Flagge wieder auf dem Server als Textdatei.<br>
+        Lies die Datei aus und du wirst die Flagge ersthalten.<br>
+        Finde heraus, welches der Felder für eine OS-Injection angreifbar sind<br>
+        und versuche dann die Flagge zu finden. <br>
+        Ach Ja die Bulletpoints unter dem Textfild sind Dateien. Klickt darauf und ladet den Inhalt.<br>       
+        Zur Hilfe findet Ihr unter der Aufgabe eine kleine Tabelle.<br>
+        Viel Erfolg!
+    </div>
+    <div class="container">
+        <div id="loaderSyscall">
+        </div>
+        <div class="input_form">
+            Dein Nutzername:<br>
+            <input type="text" id="username" value="" onkeypress="sendLoginIfEnter(event)">
+            <input type="button" id="login" value="login" onclick="sendLogin()"><br>
+            <hr>
+            Der Dateiname:<br>
+            <input type="text" id="filename" value=""><br>
+            Hier kannst du super wichtige Texte schreiben:
+            <textarea id="content" rows="4" cols="50">
+                Hey booooii willkommen zu GockelDoks der beste Texteditor aller Zeiten.
+            </textarea>
+            <br>
+            <input type="submit" id="save" value="save" onclick="saveDoc()">
+        </div>
+        <div id="files">
+            <br>
+            Deine Dateien:<br>
+            <ul id="file_list">
+            </ul>
+        </div>
+        
+        <div id="systemcall">
+        </div>
+    </div>
+    <div class="container">
+        <div id="loaderFlag">
+        </div>
+        <div class="input_form">
+            Submit your Flag!:<br>
+            <input type="text" id="flagInput" value="" onkeypress="sendFlagIfEnter(event)"></input><br>
+            <br>
+            <input type="button" id="submit" value="submit" onclick="submitFlag()">
+        </div>
+        
+        <div id="flagSubRes">       
+        </div>
+    </div>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Befehlsbeschreibung</th><th>Linux</th><th>Windows</th>
+            </tr>
+            <tr>
+                <td>aktueller Nutzer<td>whoami</td><td>whoami</td>
+            </tr>
+            <tr>
+                <td>Betriebssystem</td><td>uname -a</td><td>ver</td>
+            </tr>
+            <tr>
+                <td>Netzwerkeinstellungen</td><td>ifconfig</td><td>ipconfig /all</td>
+            </tr>
+            <tr>
+                <td>Netzwerkverbindungen</td><td>netstat -an</td><td>netstat -an</td>
+            </tr>
+            <tr>
+                <td>laufende Processe</td><td>ps -ef</td><td>tasklist</td>
+            </tr>
+            <tr>
+                <td>Auflistung von Dateien</td><td>ls</td><td>dir</td>
+            </tr>
+            <tr>
+                <td>lesen einer Datei</td><td>cat</td><td>type</td>
+            </tr>
+            <tr>
+                <td>auflisten von Umgebungsvariablen</td><td>printenv</td><td>SET</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
