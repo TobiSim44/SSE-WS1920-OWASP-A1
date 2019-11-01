@@ -2,11 +2,11 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <h1>SSE Vorlesung</h1>
-<h3>{{title}}</h3>
+Anleitung: folgt
 
 <br>
 <div style="display: flex;flex-wrap:wrap;">
-    <div style="width: 40vw;min-width: 410px; border:black 1px solid;padding: 4px">
+    <div style="width: 40vw;min-width: 410px; border:black 1px solid;padding: 4px;margin-left: 5px">
         <b>Geheime Nachrichten speichern</b>
         <br>
         <form action="/secretMessage/save" method="get">
@@ -28,7 +28,7 @@
         </form>
     </div>
 
-    <div style="width: 40vw; min-width: 410px; border:black 1px solid;padding: 4px">
+    <div style="width: 40vw; min-width: 410px; border:black 1px solid;padding: 4px; margin-left: 5px">
         <b>Geheime Nachrichten lesen</b>
         <br>
         <form action="/secretMessage/read" method="get">
@@ -61,3 +61,45 @@
         </table>
     </div>
 </div>
+
+<table style="margin-top: 30px" class="table table-bordered">
+    <tbody>
+    <tr>
+        <td>
+            Daten gefiltert abfragen
+        </td>
+        <td>SELECT * FROM tabelle WHERE spalte = 'Wert'</td>
+    </tr>
+    <tr>
+        <td>
+            Daten einfügen
+        </td>
+        <td>INSERT INTO tabelle (spalte1, spalte2, spalte3) VALUES ('Wert1', 'Wert2', 'Wert3')</td>
+    </tr>
+    <tr>
+        <td>
+            Daten aktualisieren
+        </td>
+        <td>UPDATE tabelle SET spalte1='Wert1', spalte2='Wert2' WHERE id=1</td>
+    </tr>
+    <tr>
+        <td>
+            Tabelle löschen
+        </td>
+        <td>DROP TABLE tabelle</td>
+    </tr>
+    <tr>
+        <td>
+            Neuen Benutzer erstellen
+        </td>
+        <td>CREATE USER 'newuser'@% IDENTIFIED BY 'password';</td>
+    </tr>
+    <tr>
+        <td>
+            Alle Rechte vergeben
+        </td>
+        <td>GRANT ALL PRIVILEGES ON * . * TO 'newuser'@%;</td>
+    </tr>
+    </tbody>
+</table>
+
