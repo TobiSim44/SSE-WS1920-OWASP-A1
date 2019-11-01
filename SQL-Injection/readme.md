@@ -38,6 +38,8 @@ In der docker-compose.yml stehen die Initialisierungsdaten der MySQL Datenbank.
 
 In der routes/index.js stehen die Verbindungsdaten zur Datenbank. Als Host ist die ``docker-machine ip`` anzugeben. Der default Port ist 3306, sollte dieser abweichen muss auch der Port mit angegeben werden.
 
+Die Webseite ist dann unter ``docker-machine ip`` mit Port 3000 zu ereichen.
+
 ### Ohne Docker
 
 Der Node Server kann alternativ auch mit dem Befehl: ``node start`` gestartet werden. Eine MySQL Datenbank muss selber installiert und aufgesetzt werden.

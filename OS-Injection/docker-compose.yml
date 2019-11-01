@@ -1,7 +1,7 @@
 version: '3.3'
 services:
-  app:
-    container_name: node
+  os-injection:
+    container_name: sse-os-injection
     restart: always
     build: .
     ports:
