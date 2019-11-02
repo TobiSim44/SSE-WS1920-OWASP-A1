@@ -80,7 +80,7 @@
         <div id="loaderSyscall">
         </div>
         <div class="input_form">
-            Du wolltest schon immer mal wissen welcher IP sich hinter einer DNS-Hostnamen befindet?<br>
+            Du wolltest schon immer mal wissen welche IP sich hinter einem DNS-Hostnamen befindet?<br>
             Finde es doch hier und jetzt heraus!<br>
             <input type="text" id="ipInput" value="www.google.de" onkeypress="sendPingIfEnter(event)"></input><br>
             <br>
@@ -131,6 +131,32 @@
             </tr>
             <tr>
                 <td>auflisten von Umgebungsvariablen</td><td>printenv</td><td>SET</td>
+            </tr>
+        </table>
+    </div>
+    <div class="container">
+        Diese Tabelle gibt nur ein kleine Übersicht sie ist nicht vollständig.
+        <table>
+            <tr>
+                <th>Operator</th><th>Funktion</th>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">Unix und Windows</td>
+            </tr>
+            <tr>
+                <td>A & B<td>Run A then B regardless of success of A</td>
+            </tr>
+            <tr>
+                <td>A && B</td><td>Run B if and only if A succeeded</td>
+            </tr>
+            <tr>
+                <td>A || B</td><td>Run B if and only if A failed</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">Unix only</td>
+            </tr>
+            <tr>
+                <td>A ; B</td><td>Run A and then B, regardless of success of A</td>
             </tr>
         </table>
     </div>

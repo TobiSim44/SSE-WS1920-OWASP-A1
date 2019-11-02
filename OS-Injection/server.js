@@ -65,7 +65,7 @@ app.get('/flagLvl1', function (req, res) {
 //submit flag for level 2
 app.get('/flagLvl2', function (req, res) {
 	if(req.query.flag === '10391f993067d8ecf3c2681bcc762734e953711d4d0532c1feb9f7c0fa812e55')
-		res.send('Yeahh geschafft. Du hast die zweite Flagge gefunden. <br><a href=981a6b2fe171aa8eb53b6d76f7976063c88ef63cb588dbece8a543e1c95e2145> Hier gehts zur zweiten Aufgabe </a>"');
+		res.send('Yeahh geschafft. Du hast die zweite Flagge gefunden. <br><a href=981a6b2fe171aa8eb53b6d76f7976063c88ef63cb588dbece8a543e1c95e2145> Hier gehts zur dritten Aufgabe </a>"');
 	else
 		res.send('Sorry das war wohl nicht die richtige Flagge');
 });
