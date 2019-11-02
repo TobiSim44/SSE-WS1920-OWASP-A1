@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use("/", lvl3Routes);
 
-
 app.get('/evalInputLvl1', function (req, res) {
 	const command = 'host ';
 	const regexpFromatHTML = /\n/gi;
@@ -23,14 +22,37 @@ app.get('/evalInputLvl1', function (req, res) {
 	const queryParam = req.query.userIp;
 
 	//no cheat
-	if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
-		res.send('You should not Cheat!');
-	else
-		cp.exec(command + queryParam, (_err, stdout, _stderr) => {
-			let response = stdout.replace(regexFilterLevel3, "").replace(regexFilterLevel2, "").replace(regexpFromatHTML, "<br>");
-			res.send(response);
-		});   
+		if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
+			res.send('You should not Cheat!');
+		else
+			cp.exec(command + queryParam, (_err, stdout, _stderr) => {
+				let response = stdout.replace(regexFilterLevel3, "").replace(regexFilterLevel2, "").replace(regexpFromatHTML, "<br>");
+				res.send(response);
+			});   
 });
+
+/*Variante 1: Blacklist
+ Es werden bestimmte Zeichen, wie das &-Zeichen, verboten */
+
+// function blacklist(input) {
+// 	const substrings = ["|",";","&","$","<",">","'","\\","!",">>","#"];
+// 	const str = input;
+// 	if (substrings.some(function(v) { return str.indexOf(v) >= 0; })) {
+//     	return false;
+// 	}
+// 	return true;
+// }
+
+/*Variante 2: Whitelist
+Es werden nur bestimmte Zeichen erlaubt, in diesem Fall sind das Zahlen und Punkte. */
+
+function whitelist(input) {
+	var reg=/^([0-9]|\.)+$/;
+	if(reg.test(input)) {
+		return true;
+	}
+	return false;
+}
 
 app.get('/evalInput', function (req, res) {
 		const command = 'ping -c 4 ';
@@ -41,15 +63,22 @@ app.get('/evalInput', function (req, res) {
 		const queryParam = req.query.userIp;
 
 		console.log(queryParam);
+
+		if(whitelist(queryParam)) {
+		//if(blacklist(queryParam)) {
 		//no cheat
-		if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
-			res.send('You should not Cheat!');
-		else
-			cp.exec(command + queryParam, (_err, stdout, _stderr) => {
-				console.log(stdout)
-				let response = stdout.replace(regexFilterLevel3, "").replace(regexpFromatHTML, "<br>");
-				res.send(response);
-			});   
+			if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
+				res.send('You should not Cheat!');
+			else
+				cp.exec(command + queryParam, (_err, stdout, _stderr) => {
+					console.log(stdout)
+					let response = stdout.replace(regexFilterLevel3, "").replace(regexpFromatHTML, "<br>");
+					res.send(response);
+				});   
+
+		} else {
+			res.send('Du hast unerlaubte Zeichen eingegeben!');
+		}
 });
 
 //submit flag for level 1
