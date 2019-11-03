@@ -51,8 +51,9 @@ Der Node Server kann alternativ auch mit dem Befehl: ``node start`` gestartet we
 | -- | -- | -- |
 | Tabelle oder Datenbank löschen | speichern - Geheime Nachricht |  this is my secret'); DROP TABLE Safe; |
 | alle Zeilen vom Safe lesen | Query |  /secretMessage/read?key=1 OR 1=1 |
-
-
+  
+  
+  
 # Injections effektiv verhindern
 
 Injections sind ein generisches Problem und beschränken sich nicht ausschließlich auf SQL- und OS-Injections. Anwendungen, die effektiv vor Injections geschützt werden sollen, dürfen keinesfalls Eingaben von Benutzern ungeprüft verarbeiten. Das oberste Ziel des Programmierers muss sein, alle Eingaben kritisch zu validieren und sie niemals ungeprüft als Teil von Befehlen auszuführen.
@@ -72,7 +73,6 @@ con.query("SELECT * FROM table WHERE id=?;",
         ...
    }
 );
-
 ```
 
 ## Whitelist
@@ -88,7 +88,6 @@ if(isNaN(input)) {
     // Ok: suche in der Datenbank
     ...
 }
-
 ```
 
 ## Stored Procedures
@@ -107,14 +106,13 @@ con.query("SELECT * FROM table WHERE id=" + con.escape(input) + ";",
         ...
    }
 );
-
 ```
 
 ## Zusammenfassung für OS-Injections
 
 Das Einschleusen von OS-Befehlen kann effektiv verhindert werden, indem alle Funktionen, die das Ausführen von Code auf Betriebssystemebene ermöglichen, nicht verwendet werden. In fast allen Fällen gibt es alternative Möglichkeiten, mit denen eine Ausführung von Code auf Betriebssystemebene nicht mehr nötig ist. OWASP gibt eine Übersicht über gefährliche Funktionen verschiedener Programmiersprachen:
 
-[https://www.owasp.org/index.php/Testing_for_Command_Injection_(OTG-INPVAL-013)#Code_Review_Dangerous_API](Gefährliche API's)
+https://www.owasp.org/index.php/Testing_for_Command_Injection_(OTG-INPVAL-013)#Code_Review_Dangerous_API
 
 Weiterhin sollte der Webanwendung der Zugriff verwehrt werden, um Code überhaupt auf Betriebssystemebene ausführen zu können. Dafür müssen die Permissions der Webanwendung und ihrer Komponenten kontrolliert werden.
 
