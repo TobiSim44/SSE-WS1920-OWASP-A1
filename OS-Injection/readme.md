@@ -13,7 +13,7 @@ In diesem Beispiel soll eine IP-Adresse angepingt werden. Dabei wird  die IP, di
 
 Nutzereingabe:
 ```
-ipToPing: 127.0.0.1 & ls
+127.0.0.1 & ls
 ```
 
 Der übermittelte Befehl sieht nun wie folgt aus:
