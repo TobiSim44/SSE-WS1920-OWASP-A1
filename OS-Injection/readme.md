@@ -53,7 +53,7 @@ localhost:3001
 | -- | -- | -- |
 | 1 | Feld mit Eingabe für Hostname |  & pritnenv |
 | 2 | Feld mit Eingabe für IP | 1. & ls 2. cat thisIsTheFlag |
-| 3 | Body des Dokuments | 1. Workspace anglegen 2. Datei mit Body & ls speichern  3. Datei mit & thisIsTheFlag im Body speichern|
+| 3 | Body des Dokuments | 1. Workspace anglegen 2. Datei mit Body & ls speichern  3. Datei mit & cat thisIsTheFlag im Body speichern|
 
 # Injections effektiv verhindern
 
