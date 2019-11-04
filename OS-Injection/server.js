@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require("body-parser");11
 const app = express();
-const uebung = true;
 const fs = require('fs');
 const lvl3Routes = require('./routeLevel3/routesLvl3.js');
 let cntTimesFlagLvl1Sub = 0;
@@ -48,13 +47,13 @@ function blacklist(input) {
 
 /*Variante 2: Whitelist
 Es werden nur bestimmte Zeichen erlaubt, in diesem Fall sind das Zahlen und Punkte. */
-// function whitelist(input) {
-// 	var reg=/^([0-9]|\.)+$/;
-// 	if(reg.test(input)) {
-// 		return true;
-// 	}
-// 	return false;
-// }
+function whitelist(input) {
+	var reg=/^([0-9]|\.)+$/;
+	if(reg.test(input)) {
+		return true;
+	}
+	return false;
+}
 
 app.get('/evalInput', function (req, res) {
 		const command = 'ping -c 4 ';
@@ -66,8 +65,8 @@ app.get('/evalInput', function (req, res) {
 
 		//console.log(queryParam);
 
-		//if(whitelist(queryParam) || uebung) {
-		if(blacklist(queryParam || uebung)) {
+		//if(whitelist(queryParam)) {
+		//if(blacklist(queryParam)) {
 		//no cheat
 			if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
 				res.send('You should not Cheat!');
@@ -78,9 +77,9 @@ app.get('/evalInput', function (req, res) {
 					res.send(response);
 				});   
 
-		} else {
-			res.send('Du hast unerlaubte Zeichen eingegeben!');
-		}
+		// } else {
+		// 	res.send('Du hast unerlaubte Zeichen eingegeben!');
+		// }
 });
 
 //submit flag for level 1
