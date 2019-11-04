@@ -37,26 +37,24 @@ app.get('/evalInputLvl1', function (req, res) {
 
 /*Variante 1: Blacklist
  Es werden bestimmte Zeichen, wie das &-Zeichen, verboten */
-
-// function blacklist(input) {
-// 	const substrings = ["|",";","&","$","<",">","'","\\","!",">>","#"];
-// 	const str = input;
-// 	if (substrings.some(function(v) { return str.indexOf(v) >= 0; })) {
-//     	return false;
-// 	}
-// 	return true;
-// }
+function blacklist(input) {
+	const substrings = ["|",";","&","$","<",">","'","\\","!",">>","#"];
+	const str = input;
+	if (substrings.some(function(v) { return str.indexOf(v) >= 0; })) {
+    	return false;
+	}
+	return true;
+}
 
 /*Variante 2: Whitelist
 Es werden nur bestimmte Zeichen erlaubt, in diesem Fall sind das Zahlen und Punkte. */
-
-function whitelist(input) {
-	var reg=/^([0-9]|\.)+$/;
-	if(reg.test(input)) {
-		return true;
-	}
-	return false;
-}
+// function whitelist(input) {
+// 	var reg=/^([0-9]|\.)+$/;
+// 	if(reg.test(input)) {
+// 		return true;
+// 	}
+// 	return false;
+// }
 
 app.get('/evalInput', function (req, res) {
 		const command = 'ping -c 4 ';
@@ -68,8 +66,8 @@ app.get('/evalInput', function (req, res) {
 
 		//console.log(queryParam);
 
-		if(whitelist(queryParam) || uebung) {
-		//if(blacklist(queryParam)) {
+		//if(whitelist(queryParam) || uebung) {
+		if(blacklist(queryParam)) {
 		//no cheat
 			if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
 				res.send('You should not Cheat!');
