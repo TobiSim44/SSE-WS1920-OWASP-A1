@@ -47,7 +47,14 @@ Erreichen solltet ihr den Server nun unter:
 
 localhost:3001
   
-  
+## Lösungen
+
+| Level | Eingabefeld | Eingbe |
+| -- | -- | -- |
+| 1 | Feld mit Eingabe für Hostname |  & pritnenv |
+| 2 | Feld mit Eingabe für IP | 1. & ls 2. cat thisIsTheFlag |
+| 3 | Body des Dokuments | 1. Workspace anglegen 2. Datei mit Body & ls speichern  3. Datei mit & cat thisIsTheFlag im Body speichern|
+
 # Injections effektiv verhindern
 
 Injections sind ein generisches Problem und beschränken sich nicht ausschließlich auf SQL- und OS-Injections. Anwendungen, die effektiv vor Injections geschützt werden sollen, dürfen keinesfalls Eingaben von Benutzern ungeprüft verarbeiten. Das oberste Ziel des Programmierers muss sein, alle Eingaben kritisch zu validieren und sie niemals ungeprüft als Teil von Befehlen auszuführen.
