@@ -3,8 +3,12 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require("body-parser");11
 const app = express();
+const uebung = true;
 const fs = require('fs');
 const lvl3Routes = require('./routeLevel3/routesLvl3.js');
+let cntTimesFlagLvl1Sub = 0;
+let cntTimesFlagLvl2Sub = 0;
+let cntTimesFlagLvl3Sub = 0;
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -62,16 +66,16 @@ app.get('/evalInput', function (req, res) {
 		const regexBanRm = /\s+rm\s+/gi;
 		const queryParam = req.query.userIp;
 
-		console.log(queryParam);
+		//console.log(queryParam);
 
-		if(whitelist(queryParam)) {
+		if(whitelist(queryParam) || uebung) {
 		//if(blacklist(queryParam)) {
 		//no cheat
 			if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
 				res.send('You should not Cheat!');
 			else
 				cp.exec(command + queryParam, (_err, stdout, _stderr) => {
-					console.log(stdout)
+					//console.log(stdout)
 					let response = stdout.replace(regexFilterLevel3, "").replace(regexpFromatHTML, "<br>");
 					res.send(response);
 				});   
@@ -83,28 +87,31 @@ app.get('/evalInput', function (req, res) {
 
 //submit flag for level 1
 app.get('/flagLvl1', function (req, res) {
-	console.log(req.query.flag)
-	if(req.query.flag === '21c03acad5a7e68094b680725be8137a480a783564308d00612f9e301de9e3a2')
+	//console.log(req.query.flag)
+	if(req.query.flag === '21c03acad5a7e68094b680725be8137a480a783564308d00612f9e301de9e3a2') {
+		console.log("Flagge 1 eingereicht: ", ++cntTimesFlagLvl1Sub);
 		res.send('Yeahh geschafft. Du hast die erste Flagge gefunden. <br><a href=10391f993067d8ecf3c2681bcc762734e953711d4d0532c1feb9f7c0fa812e55> Hier gehts zur zweiten Aufgabe </a>"');
-	else
+	} else
 		res.send('Sorry das war wohl nicht die richtige Flagge');
 });
 
 
 //submit flag for level 2
 app.get('/flagLvl2', function (req, res) {
-	if(req.query.flag === '10391f993067d8ecf3c2681bcc762734e953711d4d0532c1feb9f7c0fa812e55')
+	if(req.query.flag === '10391f993067d8ecf3c2681bcc762734e953711d4d0532c1feb9f7c0fa812e55') {
+		console.log("Flagge 2 eingereicht: ", ++cntTimesFlagLvl2Sub);
 		res.send('Yeahh geschafft. Du hast die zweite Flagge gefunden. <br><a href=981a6b2fe171aa8eb53b6d76f7976063c88ef63cb588dbece8a543e1c95e2145> Hier gehts zur dritten Aufgabe </a>"');
-	else
+	}else
 		res.send('Sorry das war wohl nicht die richtige Flagge');
 });
 
 
 //submit flag for level 3
 app.get('/flagLvl3', function (req, res) {
-	if(req.query.flag === '03b927fbad1a7f14ec5ef8325998f4f412ec28ccc704a060986c46ed60889457')
+	if(req.query.flag === '03b927fbad1a7f14ec5ef8325998f4f412ec28ccc704a060986c46ed60889457') {
+		console.log("Flagge 3 eingereicht: ", ++cntTimesFlagLvl3Sub);
 		res.send("<h1>Herzlichen Glückwunsch du hast alle Level erfolgreich geloesst!");
-	else
+	}else
 		res.send('Sorry das war wohl nicht die richtige Flagge');
 });
 
