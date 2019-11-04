@@ -67,7 +67,7 @@ app.get('/evalInput', function (req, res) {
 		//console.log(queryParam);
 
 		//if(whitelist(queryParam) || uebung) {
-		if(blacklist(queryParam)) {
+		if(blacklist(queryParam || uebung)) {
 		//no cheat
 			if(queryParam.match(regexpNoCheat) || queryParam.match(regexBanRm))
 				res.send('You should not Cheat!');
