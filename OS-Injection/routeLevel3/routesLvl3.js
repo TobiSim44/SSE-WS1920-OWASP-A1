@@ -65,7 +65,7 @@ const cp = require('child_process');
     else {
       const command = 'echo ' + filecontent + ' > ' + fpath;
       cp.exec(command, {cwd: __dirname},(err, _stdout, _stderr) => {
-        console.log(err, _stdout, _stderr);
+        //console.log(err, _stdout, _stderr);
         
         if (err) res.send(JSON.stringify({err: true, data: 'mmhh shit irgendwas ist schief gegangen'}));
         else res.send(JSON.stringify({err: false, data: "Datei gespeichert"}));
