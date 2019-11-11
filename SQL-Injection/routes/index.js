@@ -11,7 +11,10 @@ var con = mysql.createConnection({
     multipleStatements: true
 });
 
-
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
 
 // try {
 //     //warning Tabelle löschen
@@ -26,26 +29,19 @@ var con = mysql.createConnection({
 //
 // }
 
+try {
+    // Tabelle neu erstellen
+    con.query("CREATE TABLE Safe (personalKey int NOT NULL, title varchar(100), secret varchar(100), PRIMARY KEY(personalKey));", function (err, rows, fields) {
+        if (err) {
+            return;
+        }
+        console.log('_________________ TABLE Safe CREATED _________________');
+    });
+} catch (e) {
 
+}
 
 router.get('/', function (req, res, next) {
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-    });
-
-    try {
-        // Tabelle neu erstellen
-        con.query("CREATE TABLE Safe (personalKey int NOT NULL, title varchar(100), secret varchar(100), PRIMARY KEY(personalKey));", function (err, rows, fields) {
-            if (err) {
-                return;
-            }
-            console.log('_________________ TABLE Safe CREATED _________________');
-        });
-    } catch (e) {
-
-    }
-
     res.render('index', {title: 'Hallo, speichere deine geheime Nachricht mit deinem eigenen Schlüssel'});
 });
 
