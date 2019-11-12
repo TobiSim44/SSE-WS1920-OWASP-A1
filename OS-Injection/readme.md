@@ -1,7 +1,7 @@
 Dies ist eine Übungsaufgabe für den SSE Kurs im Wintersemester 2019/20 an der Hochschule Mannheim. 
 
 # Injection
-Die OS-Injections sind ganz ähnlich zu den SQL-Injections, nur das es hierbei um Betriebssystembefehle geht. Der Angreifer versucht seine eigenen Befehle an ordnungsgemäße Nutzereingabe anzuhängen, um so Schadcode auszuführen. Mit diesem Schadcode kann er Informationen über das System erlangen und hat sämtliche Rechte, die auch der Server besitzt!
+Die OS-Injections sind ganz ähnlich zu den SQL-Injections, nur dass es sich hierbei um Betriebssystembefehle handelt. Der Angreifer versucht seine eigenen Befehle an ordnungsgemäßen Nutzereingaben anzuhängen, um so Schadcode auszuführen. Mit diesem Schadcode kann er Informationen über das System erlangen und hat sämtliche Rechte, die auch der Server besitzt!
 
 Beispiel:
 ```
@@ -9,7 +9,7 @@ ipToPing = getRequestString("ip");
 cmdOS = "ping -c 4 " + ipToPing;
 ```
 
-In diesem Beispiel soll eine IP-Adresse angepingt werden. Dabei wird  die IP, die der Nutzer eingeben hat, direkt mit dem ping-Befehl konkateniert. Wenn die Eingabe des Nutzers aber nicht ausschließlich eine IP-Adresse enthält, sondern auch noch einen weiteren Befehl, so wird dieser ebenfalls ausgeführt.
+In diesem Beispiel soll eine IP-Adresse angepingt werden. Dabei wird die IP, die der Nutzer eingeben hat, direkt mit dem ping-Befehl konkateniert. Wenn die Eingabe des Nutzers aber nicht ausschließlich eine IP-Adresse enthält, sondern auch noch einen weiteren Befehl, so wird dieser ebenfalls ausgeführt.
 
 Nutzereingabe:
 ```
@@ -21,13 +21,13 @@ Der übermittelte Befehl sieht nun wie folgt aus:
 ping -c 4 127.0.0.1 & ls
 ```
 
-Nun wird der ping-Befehl ausgeführt und durch das "&" danach auch noch der ls-Befehl. Durch diese Sicherheitslücke würden alle Dateien der Aufsührungsumgebung des Servers mit ausgeben werden.
+Nun wird der ping-Befehl ausgeführt und durch das "&" danach auch noch der ls-Befehl. Durch diese Sicherheitslücke würden alle Dateien der Aufsührungsumgebung des Servers mit ausgegeben werden.
 
 Schwachstellen zum Ausnutzen von OS-Injections treten typischerweise auf, wenn Benutzereingaben ungeprüft (oder schlecht geprüft) in einem Betriebssystembefehl verwendet werden. 
 
 # Setup vollständig mit docker
 Wenn ihr sowohl die SQL-Injection als auch die OS-Injeciton üben wollt,
-so wechselt in in das Verzeichnis SSE-WS1920-OWASP-A1 und und lest euch bitte
+so wechselt in das Verzeichnis SSE-WS1920-OWASP-A1 und und lest euch bitte
 die readme.md dort durch.
 
 # Setup OS-Injeciton mit docker
@@ -49,9 +49,9 @@ localhost:3001
   
 ## Lösungen
 
-| Level | Eingabefeld | Eingbe |
+| Level | Eingabefeld | Eingabe |
 | -- | -- | -- |
-| 1 | Feld mit Eingabe für Hostname |  & pritnenv |
+| 1 | Feld mit Eingabe für Hostname |  & printenv |
 | 2 | Feld mit Eingabe für IP | 1. & ls 2. cat thisIsTheFlag |
 | 3 | Body des Dokuments | 1. Workspace anglegen 2. Datei mit Body & ls speichern  3. Datei mit & cat thisIsTheFlag im Body speichern|
 
